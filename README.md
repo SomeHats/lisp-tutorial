@@ -486,7 +486,7 @@ function! `print` should:
 1. call `console.log` with it's arguments
 2. return `undefined` at the end
 
-Here's the test:
+Here are the tests:
 
 ```js
 describe('evaluateExpression', () => {
@@ -511,11 +511,14 @@ describe('evaluateExpression', () => {
       expect(console.log).toHaveBeenLastCalledWith('Hello, 60!');
     });
 
-    it('returns null', () => {
-      expect(evaluateExpression(['print', 'beeeees'])).toBe(null);
+    it('returns undefined', () => {
+      expect(evaluateExpression(['print', 'beeeees'])).toBe(undefined);
     });
 
     // add some of your own
   });
 });
 ```
+
+Add the `'print'` function to your `evaluateExpression` function so these tests
+pass.
