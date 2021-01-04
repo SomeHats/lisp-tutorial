@@ -15,4 +15,12 @@ describe('evaluateExpression', () => {
     expect(evaluateExpression(['+', 2.5, 8.6])).toBe(11.1);
     expect(evaluateExpression(['+', 2, -6])).toBe(-4);
   });
+
+  it('adds lists of numbers together', () => {
+    expect(evaluateExpression(['+', 1, 2, 3, 4])).toBe(10);
+    expect(evaluateExpression(['+', 5])).toBe(5);
+    expect(
+      evaluateExpression(['+', 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1]),
+    ).toBe(0);
+  });
 });
