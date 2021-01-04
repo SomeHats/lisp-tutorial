@@ -457,14 +457,65 @@ expected.
 Jest gives us some great tools for mocking out of the box. As our `print`
 function will use `console.log`, we can use jest's tools mock that value for us.
 
-Add code like this your test file:
+Add code like this near the top of your test file, above the first `describe`
+block:
 
 ```js
 beforeEach(() => {
-  jest.spyOn(console, 'log').mockImplementation();
+  jest.spyOn(console, 'log');
 });
 
 afterEach(() => {
   console.log.mockRestore();
+});
+```
+
+Code in a `beforeEach` block will run before each `it` test block, and code in
+`afterEach` will run after each test (shocking). In our case,
+`jest.spyOn(console, 'log')` gets replaces `console.log` with a special mock
+version we can observe from our tests. `console.log.mockRestore()` undoes that -
+it puts the normal `console.log` back.
+
+Together, these mean that each test gets its own unique version of `console.log`
+for us to work with, and we can check how the code we're testing interacts with
+it.
+
+With our mocking set up, we're ready to add some tests for our new `print`
+function! `print` should:
+
+1. call `console.log` with it's arguments
+2. return `undefined` at the end
+
+Here's the test:
+
+```js
+describe('evaluateExpression', () => {
+  // ...
+
+  describe('print', () => {
+    it('calls console.log', () => {
+      evaluateExpression(['print', 'Hello, world!']);
+      expect(console.log).toHaveBeenCalledTimes(1);
+      expect(console.log).toHaveBeenLastCalledWith('Hello, world!');
+    });
+
+    it('can be called with several arguments', () => {
+      evaluateExpression(['print', 1, 2, 3]);
+      expect(console.log).toHaveBeenCalledTimes(1);
+      expect(console.log).toHaveBeenLastCalledWith(1, 2, 3);
+    });
+
+    it('evaluates nested arguments', () => {
+      evaluateExpression(['print', ['+', 'Hello, ', ['*', 12, 5], '!']]);
+      expect(console.log).toHaveBeenCalledTimes(1);
+      expect(console.log).toHaveBeenLastCalledWith('Hello, 60!');
+    });
+
+    it('returns null', () => {
+      expect(evaluateExpression(['print', 'beeeees'])).toBe(null);
+    });
+
+    // add some of your own
+  });
 });
 ```
