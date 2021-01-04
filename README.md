@@ -9,7 +9,10 @@
     - [1.0: Adding two numbers together](#10-adding-two-numbers-together)
     - [1.1: Multiple numbers!](#11-multiple-numbers)
     - [1.2: Subtraction](#12-subtraction)
-    - [1.3: Nested expressions](#13-nested-expressions)
+    - [1.3: Other operations](#13-other-operations)
+    - [1.4: Nested expressions](#14-nested-expressions)
+  - [Step 2: side-effects and control flow](#step-2-side-effects-and-control-flow)
+    - [Step 2.0: printing data](#step-20-printing-data)
 
 ## Introduction
 
@@ -291,7 +294,7 @@ describe('evaluateExpression', () => {
   it('adds two numbers together', () => {
     expect(evaluateExpression(['+', 1, 2])).toBe(3);
     expect(evaluateExpression(['+', 0, 0])).toBe(0);
-    expect(evaluateExpression(['+', 2.5 8.6])).toBe(11.1);
+    expect(evaluateExpression(['+', 2.5, 8.6])).toBe(11.1);
     expect(evaluateExpression(['+', 2, -6])).toBe(-4);
     // add some of your own!
   });
@@ -341,16 +344,18 @@ describe('evaluateExpression', () => {
   it('subtracts numbers', () => {
     expect(evaluateExpression(['-', 10, 2])).toBe(8);
     expect(evaluateExpression(['-', 10, -2])).toBe(12);
-    expect(evaluateExpression(['-', 10, 2, 3, 2])).toBe(5);
+    expect(evaluateExpression(['-', 10, 2, 3, 2])).toBe(3);
     // add some of your own!
   });
 });
 ```
 
-**Add some tests & an implementation for some other operations like
-multiplication (`*`) and division (`/`) too.**
+#### 1.3: Other operations
 
-#### 1.3: Nested expressions
+Add some tests & an implementation for some other operations like multiplication
+(`*`) and division (`/`) too.
+
+#### 1.4: Nested expressions
 
 A language where all you can do is apply a single mathematical operation to a
 list of numbers isn't very useful. Even simple calculators let you do more than
@@ -403,3 +408,63 @@ them if you absolutely need to.
 </details>
 
 </details>
+
+### Step 2: side-effects and control flow
+
+At this point, we've basically made a slightly difficult to use calculator.
+YAY!!!!??? It doesn't quiet seem like a programming language yet though. In this
+next step, we'll add side-effects (the ability for our program to output data
+and influence the world around it) and control flow (the ability for our program
+to make decisions and do different things based on its inputs).
+
+#### Step 2.0: printing data
+
+So far, none of the operations we've added to our language have side effects.
+They take some inputs, return some output, and that's that. That's often not
+very useful though: we want our programs to be able to interact with the world
+around them by e.g. reading/writing from files, displaying UI, making network
+requests, etc.
+
+One of the most common side effects is printing output to the console. In
+JavaScript, we usually write `console.log` to do this. For example:
+
+```js
+console.log('Hello', { world: true }, 1, 2, 3);
+```
+
+will output something along the lines of
+
+```
+Hello {world: true} 1 2 3
+```
+
+to the console.
+
+In our language, we'll call our version of `console.log` `print`. Because our
+language is written in JavaScript, `print` can call `console.log` under the
+hood.
+
+Functions with side-effects are harder to test than ones without. If all
+something does is take arguments as an input and return some sort of output,
+testing just means checking that the return value for a specific set of inputs
+matches your expectations.
+
+One way of testing functions with side-effects is to _mock_ the underlying
+methods that trigger the side effects. Mocking means replacing something with a
+special fake value we can use to verify that our function is working as
+expected.
+
+Jest gives us some great tools for mocking out of the box. As our `print`
+function will use `console.log`, we can use jest's tools mock that value for us.
+
+Add code like this your test file:
+
+```js
+beforeEach(() => {
+  jest.spyOn(console, 'log').mockImplementation();
+});
+
+afterEach(() => {
+  console.log.mockRestore();
+});
+```
