@@ -29,4 +29,16 @@ describe('evaluateExpression', () => {
     expect(evaluateExpression(['-', 10, -2])).toBe(12);
     expect(evaluateExpression(['-', 10, 2, 3, 2])).toBe(3);
   });
+
+  it('multiplies numbers', () => {
+    expect(evaluateExpression(['*', 10, 2])).toBe(20);
+    expect(evaluateExpression(['*', 10, -2])).toBe(-20);
+    expect(evaluateExpression(['*', 10, 2, 2])).toBe(40);
+  });
+
+  it('divides numbers', () => {
+    expect(evaluateExpression(['/', 10, 2])).toBe(5);
+    expect(evaluateExpression(['/', 10, -2])).toBe(-5);
+    expect(evaluateExpression(['/', 10, 2, 2])).toBe(2.5);
+  });
 });
