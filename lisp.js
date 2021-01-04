@@ -6,9 +6,16 @@ function evaluateExpression(expression) {
   }
 
   // if our expression is an array, it must be an s-expression, so we can
-  // evaluate it!
-  const [, ...args] = expression;
-  return args.reduce((a, b) => a + b);
+  // evaluate it! First, we need to separate the first item from the rest:
+  const [op, ...args] = expression;
+
+  // The first item tells us what to do with the rest of the items:
+  switch (op) {
+    case '+':
+      return args.reduce((a, b) => a + b);
+    case '-':
+      return args.reduce((a, b) => a - b);
+  }
 }
 
 // I'm using node's built-in common JS instead of ES modules because i'm too
