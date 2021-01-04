@@ -1,4 +1,13 @@
+const { expect } = require('@jest/globals');
 const { evaluateExpression } = require('./lisp.js');
+
+beforeEach(() => {
+  jest.spyOn(console, 'log');
+});
+
+afterEach(() => {
+  console.log.mockRestore();
+});
 
 describe('evaluateExpression', () => {
   it('evaluates atoms', () => {
@@ -52,5 +61,29 @@ describe('evaluateExpression', () => {
         ['-', ['+', 10, 5], 5],
       ]),
     ).toBe(200);
+  });
+
+  describe('print', () => {
+    it('calls console.log', () => {
+      evaluateExpression(['print', 123]);
+      expect(console.log).toHaveBeenCalledTimes(1);
+      expect(console.log).toHaveBeenLastCalledWith(123);
+    });
+
+    it('can be called with several arguments', () => {
+      evaluateExpression(['print', 1, 2, 3]);
+      expect(console.log).toHaveBeenCalledTimes(1);
+      expect(console.log).toHaveBeenLastCalledWith(1, 2, 3);
+    });
+
+    it('evaluates nested arguments', () => {
+      evaluateExpression(['print', ['+', 5, ['*', 12, 5]]]);
+      expect(console.log).toHaveBeenCalledTimes(1);
+      expect(console.log).toHaveBeenLastCalledWith(65);
+    });
+
+    it('returns undefined', () => {
+      expect(evaluateExpression(['print', 0])).toBe(undefined);
+    });
   });
 });
