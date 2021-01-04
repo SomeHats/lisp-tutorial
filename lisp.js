@@ -7,8 +7,8 @@ function evaluateExpression(expression) {
 
   // if our expression is an array, it must be an s-expression, so we can
   // evaluate it!
-  const [, a, b] = expression;
-  return a + b;
+  const [, ...args] = expression;
+  return args.reduce((a, b) => a + b);
 }
 
 // I'm using node's built-in common JS instead of ES modules because i'm too
