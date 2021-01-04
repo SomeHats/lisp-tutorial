@@ -8,4 +8,11 @@ describe('evaluateExpression', () => {
     expect(evaluateExpression(true)).toBe(true);
     expect(evaluateExpression(null)).toBe(null);
   });
+
+  it('adds two numbers together', () => {
+    expect(evaluateExpression(['+', 1, 2])).toBe(3);
+    expect(evaluateExpression(['+', 0, 0])).toBe(0);
+    expect(evaluateExpression(['+', 2.5, 8.6])).toBe(11.1);
+    expect(evaluateExpression(['+', 2, -6])).toBe(-4);
+  });
 });
