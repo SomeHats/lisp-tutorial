@@ -23,4 +23,10 @@ describe('evaluateExpression', () => {
       evaluateExpression(['+', 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1]),
     ).toBe(0);
   });
+
+  it('subtracts numbers', () => {
+    expect(evaluateExpression(['-', 10, 2])).toBe(8);
+    expect(evaluateExpression(['-', 10, -2])).toBe(12);
+    expect(evaluateExpression(['-', 10, 2, 3, 2])).toBe(3);
+  });
 });
