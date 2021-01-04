@@ -1,0 +1,16 @@
+{
+  "name": "lisp-tut",
+  "version": "1.0.0",
+  "description": "This branch contains a solution. See the `main` branch for actual content.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^26.6.3",
+    "prettier": "^2.2.1"
+  }
+}
