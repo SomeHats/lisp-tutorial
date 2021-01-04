@@ -41,4 +41,16 @@ describe('evaluateExpression', () => {
     expect(evaluateExpression(['/', 10, -2])).toBe(-5);
     expect(evaluateExpression(['/', 10, 2, 2])).toBe(2.5);
   });
+
+  it('evaluates nested expressions', () => {
+    expect(evaluateExpression(['+', ['+', 1, 2], ['+', 3, 4]])).toBe(10);
+    expect(evaluateExpression(['*', ['+', 1, 2, 3, 4], ['-', 10, 4]])).toBe(60);
+    expect(
+      evaluateExpression([
+        '*',
+        ['+', 10, ['/', 100, 10]],
+        ['-', ['+', 10, 5], 5],
+      ]),
+    ).toBe(200);
+  });
 });
