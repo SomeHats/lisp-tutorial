@@ -15,6 +15,10 @@ function evaluateExpression(expression) {
       return args.reduce((a, b) => a + b);
     case '-':
       return args.reduce((a, b) => a - b);
+    case '*':
+      return args.reduce((a, b) => a * b);
+    case '/':
+      return args.reduce((a, b) => a / b);
   }
 }
 
