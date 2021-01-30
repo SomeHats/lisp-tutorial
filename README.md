@@ -246,6 +246,7 @@ should end in `.test.js` so Jest knows about it. I called mine `lisp.test.js`.
 
 ```js
 // in lisp.test.js:
+
 it('works', () => {
   expect(2 + 2).toBe(4);
 });
@@ -271,6 +272,7 @@ file as your tests, whatever. I wrote mine in a file called `lisp.js` like this:
 
 ```js
 // in lisp.js:
+
 function evaluateExpression() {
   // TODO: implement me
 }
@@ -384,6 +386,8 @@ We've added two numbers together - what about lists of arbitrary length? Lets
 add another test to our `evaluateExpression` test block:
 
 ```js
+// in lisp.test.js:
+
 describe('evaluateExpression', () => {
   // ...
 
@@ -408,6 +412,8 @@ Right now, all our language can do is add together lists of numbers. Let's do
 subtraction, too!
 
 ```js
+// in lisp.test.js:
+
 describe('evaluateExpression', () => {
   // ...
 
@@ -427,8 +433,6 @@ describe('evaluateExpression', () => {
 Add some tests & an implementation for some other operations like multiplication
 (`*`) and division (`/`) too.
 
-**[See change][commit 1.4-tests] • [Open file][file lisp.test.js@1.4-tests]**
-
 #### 1.5: Nested expressions
 
 A language where all you can do is apply a single mathematical operation to a
@@ -436,6 +440,8 @@ list of numbers isn't very useful. Even simple calculators let you do more than
 that! Let's add support for more complex nested expressions:
 
 ```js
+// in lisp.test.js:
+
 describe('evaluateExpression', () => {
   // ...
 
@@ -455,22 +461,6 @@ describe('evaluateExpression', () => {
 ```
 
 **[See change][commit 1.5-tests] • [Open file][file lisp.test.js@1.5-tests]**
-
-<details>
-<summary><strong>Hint</strong></summary>
-
-> `evaluateExpression` can call itself
-> [_recursively_](https://developer.mozilla.org/en-US/docs/Glossary/Recursion):
->
-> ```js
-> if (Array.isArray(subExpression)) {
->   return evaluateExpression(subExpression);
-> } else {
->   // do something else
-> }
-> ```
-
-</details>
 
 #### 1.6: Review & improve your code
 
@@ -551,6 +541,8 @@ Add code like this near the top of your test file, above the first `describe`
 block:
 
 ```js
+// in lisp.test.js:
+
 beforeEach(() => {
   jest.spyOn(console, 'log');
 });
@@ -583,6 +575,8 @@ later.
 Here are the tests:
 
 ```js
+// in lisp.test.js:
+
 describe('evaluateExpression', () => {
   // ...
 
@@ -632,7 +626,94 @@ pass.
 
 #### 2.1: Conditionals
 
-TODO
+Next up is control-flow: the ability for programs written in our language to
+change their flow based on their inputs. One of the the most familiar forms of
+this in JavaScript are `if` conditional statements:
+
+```js
+if (true) {
+  console.log(1);
+} else {
+  console.log(2);
+}
+```
+
+What would happen if you ran this snippet of code?
+
+1. The _expression_ in the if's _condition_ would get evaluated - in this case
+   to `true`.
+2. Because the condition is truthy, the code between the first `{}` would get
+   run - printing `1`.
+3. The code in the `else` branch **does not get run**.
+
+In Lisp, we'd write this like this:
+
+```lisp
+(if true (print 1) (print 2))
+```
+
+or in our dialect, like this:
+
+```js
+['if', true, ['print', 1], ['print', 2]];
+```
+
+Although the syntax is the same as the other features we've added to our
+language so far, this is actually very different. Everything we've added so far
+is what our language will later think of as a _function_. In our language, when
+calling a function:
+
+1. You evaluate all the _arguments_ to the function
+2. You evaluate the function itself
+3. You return the result
+
+This won't work for `if` - we can't evaluate all the arguments to it, because
+otherwise we'd get two `print` results in our example above instead of just one.
+Be careful of this when implementing your solution for this step. `if` is a
+special construct in our language, so you might want to treat it differently to
+the things you've added so far.
+
+Here are the tests:
+
+```js
+// in lisp.test.js:
+
+describe('evaluateExpression', () => {
+  // ...
+
+  describe('if', () => {
+    it('returns the correct branch based on a condition', () => {
+      const expr1 = ['if', true, ['+', 0, 1], ['*', 10, 2]];
+      expect(evaluateExpression(expr1)).toBe(1);
+      const expr2 = ['if', false, ['+', 0, 1], ['*', 10, 2]];
+      expect(evaluateExpression(expr2)).toBe(20);
+    });
+
+    it('evaluates the condition as an expression', () => {
+      expect(evaluateExpression(['if', ['+', 1, 1], 1, 2])).toBe(1);
+      expect(evaluateExpression(['if', ['+', 1, -1], 1, 2])).toBe(2);
+    });
+
+    it('only evaluates one branch', () => {
+      evaluateExpression(['if', true, ['print', 1], ['print', 2]]);
+      expect(console.log).toHaveBeenCalledTimes(1);
+      expect(console.log).toHaveBeenLastCalledWith(1);
+
+      evaluateExpression(['if', false, ['print', 1], ['print', 2]]);
+      expect(console.log).toHaveBeenCalledTimes(2);
+      expect(console.log).toHaveBeenLastCalledWith(2);
+    });
+
+    it('returns undefined if condition is not met with no else-branch', () => {
+      expect(evaluateExpression(['if', false, 1])).toBe(undefined);
+    });
+
+    // add some of your own
+  });
+});
+```
+
+**[See change][commit 2.1-tests] • [Open file][file lisp.test.js@2.1-tests]**
 
 ## Solutions
 
@@ -678,10 +759,6 @@ mine - if the tests pass, it's working perfectly!
   https://github.com/SomeHats/lisp-tutorial/commit/60f590c57d584d8386c4d8335b15fb822699763c
 [file lisp.test.js@1.3-tests]:
   https://github.com/SomeHats/lisp-tutorial/blob/60f590c57d584d8386c4d8335b15fb822699763c/lisp.test.js
-[commit 1.4-tests]:
-  https://github.com/SomeHats/lisp-tutorial/commit/951c48cd4d9fb770cca7cacd321e3af314bf797a
-[file lisp.test.js@1.4-tests]:
-  https://github.com/SomeHats/lisp-tutorial/blob/951c48cd4d9fb770cca7cacd321e3af314bf797a/lisp.test.js
 [commit 1.5-tests]:
   https://github.com/SomeHats/lisp-tutorial/commit/00917c58d64b21c286f4bcd133e11c5f3a3e6e07
 [file lisp.test.js@1.5-tests]:
@@ -690,6 +767,10 @@ mine - if the tests pass, it's working perfectly!
   https://github.com/SomeHats/lisp-tutorial/commit/e5582172526e8c9c010ede6511f2a9abca72be5f
 [file lisp.test.js@2.0-tests]:
   https://github.com/SomeHats/lisp-tutorial/blob/e5582172526e8c9c010ede6511f2a9abca72be5f/lisp.test.js
+[commit 2.1-tests]:
+  https://github.com/SomeHats/lisp-tutorial/commit/2fa9247b1c66ce38283bf760da4d9797f8b1a2ec
+[file lisp.test.js@2.1-tests]:
+  https://github.com/SomeHats/lisp-tutorial/blob/2fa9247b1c66ce38283bf760da4d9797f8b1a2ec/lisp.test.js
 [commit 1.0-solution]:
   https://github.com/SomeHats/lisp-tutorial/commit/ad1c960f8b16e4920a9f63683e90a9455bc2136a
 [file lisp.js@1.0-solution]:
