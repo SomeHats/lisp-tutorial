@@ -33,11 +33,10 @@ const readmeSourceAfter = readmeSource.slice(endTagIndex); // includes end tag
 
 const commitRefs = new Set();
 let match;
-const re = /\[.*?]\[(.*?)\]/g;
+const re = /\[.*?]\[(.*?)\]/gs;
 while ((match = re.exec(readmeSource))) {
   const commitRef = match[1];
   if (commitRef.match(/^(file [^@]*@.*)|(commit .*)$/)) {
-    console.log(commitRef);
     commitRefs.add(commitRef);
   }
 }

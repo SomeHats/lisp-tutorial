@@ -16,6 +16,7 @@
   - [Step 2: side-effects and control flow](#step-2-side-effects-and-control-flow)
     - [2.0: Printing data](#20-printing-data)
     - [2.1: Conditionals](#21-conditionals)
+- [Solutions](#solutions)
 
 ## Introduction
 
@@ -339,16 +340,6 @@ This is the process we'll follow for each step. First, I'll give you some
 not to look ahead - take each set of tests one-at-a-time, and don't move on
 until you've completed them.
 
-<details>
-<summary><strong>Solution</strong></summary>
-
-> Only open the solution if you absolutely need it - or, after you've written
-> your own. Remember: there's always more than one way to do something! Just
-> because you got something different to me, doesn't mean it's wrong!
->
-> **[See change][commit 1.0-solution] • [Open file][file lisp.js@1.0-solution]**
-
-</details>
 #### 1.1: Adding two numbers together
 
 Atoms are OK, but don't make for a particularly useful programming language.
@@ -369,6 +360,8 @@ describe('evaluateExpression', () => {
   });
 });
 ```
+
+**[See change][commit 1.1-tests] • [Open file][file lisp.test.js@1.1-tests]**
 
 Update your `evaluateExpression` to make the tests pass.
 
@@ -405,6 +398,8 @@ describe('evaluateExpression', () => {
 });
 ```
 
+**[See change][commit 1.2-tests] • [Open file][file lisp.test.js@1.2-tests]**
+
 Update your `evaluateExpression` function to make your tests pass.
 
 #### 1.3: Subtraction
@@ -425,10 +420,14 @@ describe('evaluateExpression', () => {
 });
 ```
 
+**[See change][commit 1.3-tests] • [Open file][file lisp.test.js@1.3-tests]**
+
 #### 1.4: Other operations
 
 Add some tests & an implementation for some other operations like multiplication
 (`*`) and division (`/`) too.
+
+**[See change][commit 1.4-tests] • [Open file][file lisp.test.js@1.4-tests]**
 
 #### 1.5: Nested expressions
 
@@ -454,6 +453,8 @@ describe('evaluateExpression', () => {
   });
 });
 ```
+
+**[See change][commit 1.5-tests] • [Open file][file lisp.test.js@1.5-tests]**
 
 <details>
 <summary><strong>Hint</strong></summary>
@@ -613,6 +614,8 @@ describe('evaluateExpression', () => {
 });
 ```
 
+**[See change][commit 2.0-tests] • [Open file][file lisp.test.js@2.0-tests]**
+
 Add the `'print'` function to your `evaluateExpression` function so these tests
 pass.
 
@@ -631,15 +634,93 @@ pass.
 
 TODO
 
+## Solutions
+
+My own implementations for each step are listed below for reference. Don't look
+at these until you've completed each step! And remember: there's almost always
+more than one way to do something. Don't worry if your code looks different to
+mine - if the tests pass, it's working perfectly!
+
+- **Step 1: Evaluating simple expressions**
+  - **1.0: Atoms.** [See change][commit 1.0-solution] • [Open
+    lisp.js][file lisp.js@1.0-solution]
+  - **1.1: Adding two numbers together.** [See change][commit 1.1-solution] •
+    [Open lisp.js][file lisp.js@1.1-solution]
+  - **1.2: Multiple numbers.** [See change][commit 1.2-solution] • [Open
+    lisp.js][file lisp.js@1.2-solution]
+  - **1.3: Subtraction.** [See change][commit 1.3-solution] • [Open
+    lisp.js][file lisp.js@1.3-solution]
+  - **1.4: Other operations.** [See change][commit 1.4-solution] • [Open
+    lisp.js][file lisp.js@1.4-solution]
+  - **1.5: Nested expressions.** [See change][commit 1.5-solution] • [Open
+    lisp.js][file lisp.js@1.5-solution]
+- **Step 2: side-effects and control flow**
+  - **2.0: Printing data.** [See change][commit 2.0-solution] • [Open
+    lisp.js][file lisp.js@2.0-solution]
+  - **2.1: Conditionals.** [See change][commit 2.1-solution] • [Open
+    lisp.js][file lisp.js@2.1-solution]
+
 <!-- commits-index-start -->
 
 [commit 1.0-tests]:
   https://github.com/SomeHats/lisp-tutorial/commit/b1b673b43741a8268a14274abe7ce4cdd893f0f1
 [file lisp.test.js@1.0-tests]:
   https://github.com/SomeHats/lisp-tutorial/blob/b1b673b43741a8268a14274abe7ce4cdd893f0f1/lisp.test.js
+[commit 1.1-tests]:
+  https://github.com/SomeHats/lisp-tutorial/commit/4d3fd90a93c8ab4f49475b6eb1a27800ee42907d
+[file lisp.test.js@1.1-tests]:
+  https://github.com/SomeHats/lisp-tutorial/blob/4d3fd90a93c8ab4f49475b6eb1a27800ee42907d/lisp.test.js
+[commit 1.2-tests]:
+  https://github.com/SomeHats/lisp-tutorial/commit/59584c7f2895ea58295670fb8bc7e3bc1e7c5824
+[file lisp.test.js@1.2-tests]:
+  https://github.com/SomeHats/lisp-tutorial/blob/59584c7f2895ea58295670fb8bc7e3bc1e7c5824/lisp.test.js
+[commit 1.3-tests]:
+  https://github.com/SomeHats/lisp-tutorial/commit/60f590c57d584d8386c4d8335b15fb822699763c
+[file lisp.test.js@1.3-tests]:
+  https://github.com/SomeHats/lisp-tutorial/blob/60f590c57d584d8386c4d8335b15fb822699763c/lisp.test.js
+[commit 1.4-tests]:
+  https://github.com/SomeHats/lisp-tutorial/commit/951c48cd4d9fb770cca7cacd321e3af314bf797a
+[file lisp.test.js@1.4-tests]:
+  https://github.com/SomeHats/lisp-tutorial/blob/951c48cd4d9fb770cca7cacd321e3af314bf797a/lisp.test.js
+[commit 1.5-tests]:
+  https://github.com/SomeHats/lisp-tutorial/commit/00917c58d64b21c286f4bcd133e11c5f3a3e6e07
+[file lisp.test.js@1.5-tests]:
+  https://github.com/SomeHats/lisp-tutorial/blob/00917c58d64b21c286f4bcd133e11c5f3a3e6e07/lisp.test.js
+[commit 2.0-tests]:
+  https://github.com/SomeHats/lisp-tutorial/commit/e5582172526e8c9c010ede6511f2a9abca72be5f
+[file lisp.test.js@2.0-tests]:
+  https://github.com/SomeHats/lisp-tutorial/blob/e5582172526e8c9c010ede6511f2a9abca72be5f/lisp.test.js
 [commit 1.0-solution]:
   https://github.com/SomeHats/lisp-tutorial/commit/ad1c960f8b16e4920a9f63683e90a9455bc2136a
 [file lisp.js@1.0-solution]:
   https://github.com/SomeHats/lisp-tutorial/blob/ad1c960f8b16e4920a9f63683e90a9455bc2136a/lisp.js
+[commit 1.1-solution]:
+  https://github.com/SomeHats/lisp-tutorial/commit/12b7c6d1783d37a91c5d4303279a192b468b839f
+[file lisp.js@1.1-solution]:
+  https://github.com/SomeHats/lisp-tutorial/blob/12b7c6d1783d37a91c5d4303279a192b468b839f/lisp.js
+[commit 1.2-solution]:
+  https://github.com/SomeHats/lisp-tutorial/commit/763e0386f985baee4e7441349d7a7c871f187db5
+[file lisp.js@1.2-solution]:
+  https://github.com/SomeHats/lisp-tutorial/blob/763e0386f985baee4e7441349d7a7c871f187db5/lisp.js
+[commit 1.3-solution]:
+  https://github.com/SomeHats/lisp-tutorial/commit/bd196eeb9bead53275bdcc93f95d7c586ae0cd3d
+[file lisp.js@1.3-solution]:
+  https://github.com/SomeHats/lisp-tutorial/blob/bd196eeb9bead53275bdcc93f95d7c586ae0cd3d/lisp.js
+[commit 1.4-solution]:
+  https://github.com/SomeHats/lisp-tutorial/commit/0fed141a0c1471d19208c3ee648960e0889d3173
+[file lisp.js@1.4-solution]:
+  https://github.com/SomeHats/lisp-tutorial/blob/0fed141a0c1471d19208c3ee648960e0889d3173/lisp.js
+[commit 1.5-solution]:
+  https://github.com/SomeHats/lisp-tutorial/commit/b0266d8aefd29aef796c2b73a053fbc43cafdbd6
+[file lisp.js@1.5-solution]:
+  https://github.com/SomeHats/lisp-tutorial/blob/b0266d8aefd29aef796c2b73a053fbc43cafdbd6/lisp.js
+[commit 2.0-solution]:
+  https://github.com/SomeHats/lisp-tutorial/commit/8d1965664ed48a06ea7020f6b5139acbb7105af9
+[file lisp.js@2.0-solution]:
+  https://github.com/SomeHats/lisp-tutorial/blob/8d1965664ed48a06ea7020f6b5139acbb7105af9/lisp.js
+[commit 2.1-solution]:
+  https://github.com/SomeHats/lisp-tutorial/commit/0a56f56140537303a759bed1d00763ac04601181
+[file lisp.js@2.1-solution]:
+  https://github.com/SomeHats/lisp-tutorial/blob/0a56f56140537303a759bed1d00763ac04601181/lisp.js
 
 <!-- commits-index-end -->
