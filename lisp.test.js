@@ -86,4 +86,32 @@ describe('evaluateExpression', () => {
       expect(evaluateExpression(['print', 0])).toBe(undefined);
     });
   });
+
+  describe('if', () => {
+    it('returns the correct branch based on a condition', () => {
+      const expr1 = ['if', true, ['+', 0, 1], ['*', 10, 2]];
+      expect(evaluateExpression(expr1)).toBe(1);
+      const expr2 = ['if', false, ['+', 0, 1], ['*', 10, 2]];
+      expect(evaluateExpression(expr2)).toBe(20);
+    });
+
+    it('evaluates the condition as an expression', () => {
+      expect(evaluateExpression(['if', ['+', 1, 1], 1, 2])).toBe(1);
+      expect(evaluateExpression(['if', ['+', 1, -1], 1, 2])).toBe(2);
+    });
+
+    it('only evaluates one branch', () => {
+      evaluateExpression(['if', true, ['print', 1], ['print', 2]]);
+      expect(console.log).toHaveBeenCalledTimes(1);
+      expect(console.log).toHaveBeenLastCalledWith(1);
+
+      evaluateExpression(['if', false, ['print', 1], ['print', 2]]);
+      expect(console.log).toHaveBeenCalledTimes(2);
+      expect(console.log).toHaveBeenLastCalledWith(2);
+    });
+
+    it('returns undefined if condition is not met with no else-branch', () => {
+      expect(evaluateExpression(['if', false, 1])).toBe(undefined);
+    });
+  });
 });
