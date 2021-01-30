@@ -330,7 +330,7 @@ describe('evaluateExpression', () => {
 });
 ```
 
-**[See change](commit 1.0-tests) • [Open file](file lisp.test.js@1.0-tests)**
+**[See change][commit 1.0-tests] • [Open file][file lisp.test.js@1.0-tests]**
 
 Add an implementation to `evaluateExpression` that makes these tests pass.
 
@@ -345,8 +345,8 @@ until you've completed them.
 > Only open the solution if you absolutely need it - or, after you've written
 > your own. Remember: there's always more than one way to do something! Just
 > because you got something different to me, doesn't mean it's wrong!
-
-**[See change](commit 1.0-solution) • [Open file](file lisp.js@1.0-solution)**
+>
+> **[See change][commit 1.0-solution] • [Open file][file lisp.js@1.0-solution]**
 
 </details>
 #### 1.1: Adding two numbers together
