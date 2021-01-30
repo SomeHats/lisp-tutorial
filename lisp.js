@@ -1,5 +1,5 @@
-function evaluateExpression() {
-  // TODO: implement me
+function evaluateExpression(expression) {
+  return expression;
 }
 
 // I'm using node's built-in common JS instead of ES modules because i'm too
