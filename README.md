@@ -6,11 +6,12 @@
 - [Building the language](#building-the-language)
   - [Step 0: Setup](#step-0-setup)
   - [Step 1: Evaluating simple expressions](#step-1-evaluating-simple-expressions)
-    - [1.0: Adding two numbers together](#10-adding-two-numbers-together)
-    - [1.1: Multiple numbers!](#11-multiple-numbers)
-    - [1.2: Subtraction](#12-subtraction)
-    - [1.3: Other operations](#13-other-operations)
-    - [1.4: Nested expressions](#14-nested-expressions)
+    - [1.0: Atoms](#10-atoms)
+    - [1.1: Adding two numbers together](#11-adding-two-numbers-together)
+    - [1.2: Multiple numbers!](#12-multiple-numbers)
+    - [1.3: Subtraction](#13-subtraction)
+    - [1.4: Other operations](#14-other-operations)
+    - [1.5: Nested expressions](#15-nested-expressions)
   - [Step 2: side-effects and control flow](#step-2-side-effects-and-control-flow)
     - [Step 2.0: printing data](#step-20-printing-data)
 
@@ -259,7 +260,7 @@ familiarity with the principles of unit testing and test driven development.
 ### Step 1: Evaluating simple expressions
 
 To start off with, we'll be writing tests for a function called
-`evaluateExpression`. `evaluateExpression` takes a single s-expression and
+`evaluateExpression`. `evaluateExpression` takes a single expression and
 evaluates it, returning the result.
 
 You can write this function wherever you want - in it's own file, in the same
@@ -283,7 +284,32 @@ const { evaluateExpression } = require('./lisp.js');
 // TODO: tests go here
 ```
 
-#### 1.0: Adding two numbers together
+#### 1.0: Atoms
+
+We've already learnt a bit about lisp s-expressions, but what about expressions
+without the S? In JavaScript, an expression is anything that can go:
+
+- on the right-hand-side of an `=` in a `let x = ...` statement
+- in an argument to a function
+- in the condition part of an `if (...) {}` statement
+
+That means we have:
+
+- Simple values like `1`, `true`, and `"Hello"`
+- Arithmetic like `1 + 2`
+- Function calls like `calculateAge()`
+
+Our language is the same: our expressions are either single values, or more
+complex computations involving several values.
+
+We'll start with simplest expressions in our language: evaluating _atoms_. Atoms
+are the smallest parts of our language that don't take any extra work to
+evaluate, and can't be broken down into smaller pieces than they already are.
+Atoms are things like numbers, true, false, null, etc.
+
+We could also include strings in this, but strings are going to be treated a bit
+specially in our language, so we'll leave them for now and come back to them
+later.
 
 Let's add our first tests to our test file:
 
@@ -291,11 +317,12 @@ Let's add our first tests to our test file:
 // in lisp.test.js:
 
 describe('evaluateExpression', () => {
-  it('adds two numbers together', () => {
-    expect(evaluateExpression(['+', 1, 2])).toBe(3);
-    expect(evaluateExpression(['+', 0, 0])).toBe(0);
-    expect(evaluateExpression(['+', 2.5, 8.6])).toBe(11.1);
-    expect(evaluateExpression(['+', 2, -6])).toBe(-4);
+  it('evaluates atoms', () => {
+    expect(evaluateExpression(1)).toBe(1);
+    expect(evaluateExpression(-101)).toBe(-101);
+    expect(evaluateExpression(123.456)).toBe(123.456);
+    expect(evaluateExpression(true).toBe(true);
+    expect(evaluateExpression(null)).toBe(null);
     // add some of your own!
   });
 });
@@ -308,7 +335,43 @@ This is the process we'll follow for each step. First, I'll give you some
 not to look ahead - take each set of tests one-at-a-time, and don't move on
 until you've completed them.
 
-#### 1.1: Multiple numbers!
+#### 1.1: Adding two numbers together
+
+Atoms are OK, but don't make for a particularly useful programming language.
+Lets try combining two number atoms with `+`. Add these tests:
+
+```js
+// in lisp.test.js:
+
+describe('evaluateExpression', () => {
+  // ...
+
+  it('adds two numbers together', () => {
+    expect(evaluateExpression(['+', 1, 2])).toBe(3);
+    expect(evaluateExpression(['+', 0, 0])).toBe(0);
+    expect(evaluateExpression(['+', 2.5, 8.6])).toBe(11.1);
+    expect(evaluateExpression(['+', 2, -6])).toBe(-4);
+    // add some of your own!
+  });
+});
+```
+
+Update your `evaluateExpression` to make the tests pass.
+
+Throughout this tutorial, I'll offer occasional hints, like below. You can
+expand these by clicking on them. Try not to rely on them though - only expand
+them if you absolutely need to.
+
+<details>
+<summary><strong>Hint</strong></summary>
+
+> Use
+> [`Array.isArray`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/isArray)
+> to check if something is an array.
+
+</details>
+
+#### 1.2: Multiple numbers!
 
 We've added two numbers together - what about lists of arbitrary length? Lets
 add another test to our `evaluateExpression` test block:
@@ -328,11 +391,9 @@ describe('evaluateExpression', () => {
 });
 ```
 
-In JavaScript, `+` can also be used to join strings: `"Hello" + "World"`
-evaluates to `"HelloWorld"`. **Add tests and change your implementation if
-necessary to check that your language can join strings like this too.**
+Update your `evaluateExpression` function to make your tests pass.
 
-#### 1.2: Subtraction
+#### 1.3: Subtraction
 
 Right now, all our language can do is add together lists of numbers. Let's do
 subtraction, too!
@@ -350,12 +411,12 @@ describe('evaluateExpression', () => {
 });
 ```
 
-#### 1.3: Other operations
+#### 1.4: Other operations
 
 Add some tests & an implementation for some other operations like multiplication
 (`*`) and division (`/`) too.
 
-#### 1.4: Nested expressions
+#### 1.5: Nested expressions
 
 A language where all you can do is apply a single mathematical operation to a
 list of numbers isn't very useful. Even simple calculators let you do more than
@@ -380,19 +441,8 @@ describe('evaluateExpression', () => {
 });
 ```
 
-Throughout this tutorial, I'll offer occasional hints, like below. You can
-expand these by clicking on them. Try not to rely on them though - only expand
-them if you absolutely need to.
-
 <details>
-<summary><strong>Hint 1</strong></summary>
-
-> Use
-> [`Array.isArray`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/isArray)
-> to check if something is an array.
-
-<details>
-<summary><strong>Hint 2</strong></summary>
+<summary><strong>Hint</strong></summary>
 
 > `evaluateExpression` can call itself
 > [_recursively_](https://developer.mozilla.org/en-US/docs/Glossary/Recursion):
@@ -404,8 +454,6 @@ them if you absolutely need to.
 >   // do something else
 > }
 > ```
-
-</details>
 
 </details>
 
@@ -528,7 +576,7 @@ Add the `'print'` function to your `evaluateExpression` function so these tests
 pass.
 
 <details>
-<summary><strong>Hint 1</strong></summary>
+<summary><strong>Hint</strong></summary>
 
 > Our print function accepts any number of arguments, and our tests are
 > expecting us to call `console.log` directly with those arguments. If you're
