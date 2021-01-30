@@ -12,8 +12,10 @@
     - [1.3: Subtraction](#13-subtraction)
     - [1.4: Other operations](#14-other-operations)
     - [1.5: Nested expressions](#15-nested-expressions)
+    - [1.6: Review & improve your code](#16-review--improve-your-code)
   - [Step 2: side-effects and control flow](#step-2-side-effects-and-control-flow)
-    - [Step 2.0: printing data](#step-20-printing-data)
+    - [2.0: Printing data](#20-printing-data)
+    - [2.1: Conditionals](#21-conditionals)
 
 ## Introduction
 
@@ -328,6 +330,8 @@ describe('evaluateExpression', () => {
 });
 ```
 
+**[See change](commit 1.0-tests) • [Open file](file lisp.test.js@1.0-tests)**
+
 Add an implementation to `evaluateExpression` that makes these tests pass.
 
 This is the process we'll follow for each step. First, I'll give you some
@@ -335,6 +339,16 @@ This is the process we'll follow for each step. First, I'll give you some
 not to look ahead - take each set of tests one-at-a-time, and don't move on
 until you've completed them.
 
+<details>
+<summary><strong>Solution</strong></summary>
+
+> Only open the solution if you absolutely need it - or, after you've written
+> your own. Remember: there's always more than one way to do something! Just
+> because you got something different to me, doesn't mean it's wrong!
+
+**[See change](commit 1.0-solution) • [Open file](file lisp.js@1.0-solution)**
+
+</details>
 #### 1.1: Adding two numbers together
 
 Atoms are OK, but don't make for a particularly useful programming language.
@@ -457,6 +471,33 @@ describe('evaluateExpression', () => {
 
 </details>
 
+#### 1.6: Review & improve your code
+
+Before we move on, now is a great chance to take a step back and look at the
+code we've written so far. TDD (test-driven development) stans like to follow a
+process called **red-green-refactor**:
+
+1. **Red**. Write a failing test. Your test suite has red Xs!
+2. **Green**. Make the smallest possible change to your code to make your test
+   pass. Now, those red Xs should be green ✔️s
+3. **Refactor**. Improve and clean up your code from that simple change
+
+Personally, I find following something like this strictly is too rigid for me,
+but the principles behind it are pretty solid. It's a good way to ensure all
+your code is properly tested, and taking a step back every now and then to
+review your work and look for chances to improve it is pretty good practice.
+
+Generally, you learn as you go - you almost always know more about a problem
+_after_ writing all the code to solve it than before. Taking a step back and
+revisiting your earlier decisions with that new deeper understanding is a great
+way to improve quality overall.
+
+Look at your `lisp.js` file. What would you do differently if you wrote this
+from scratch now? Which parts of the code don't you like? Where could things be
+improved? Take a moment to consider and improve your code. Don't worry if you
+can't think of anything though! This step is optional, especially if you've been
+refactoring as you go.
+
 ### Step 2: side-effects and control flow
 
 At this point, we've basically made a slightly difficult to use calculator.
@@ -465,7 +506,7 @@ next step, we'll add side-effects (the ability for our program to output data
 and influence the world around it) and control flow (the ability for our program
 to make decisions and do different things based on its inputs).
 
-#### Step 2.0: printing data
+#### 2.0: Printing data
 
 So far, none of the operations we've added to our language have side effects.
 They take some inputs, return some output, and that's that. That's often not
@@ -585,3 +626,20 @@ pass.
 > might help here!
 
 </details>
+
+#### 2.1: Conditionals
+
+TODO
+
+<!-- commits-index-start -->
+
+[commit 1.0-tests]:
+  https://github.com/SomeHats/lisp-tutorial/commit/b1b673b43741a8268a14274abe7ce4cdd893f0f1
+[file lisp.test.js@1.0-tests]:
+  https://github.com/SomeHats/lisp-tutorial/blob/b1b673b43741a8268a14274abe7ce4cdd893f0f1/lisp.test.js
+[commit 1.0-solution]:
+  https://github.com/SomeHats/lisp-tutorial/commit/ad1c960f8b16e4920a9f63683e90a9455bc2136a
+[file lisp.js@1.0-solution]:
+  https://github.com/SomeHats/lisp-tutorial/blob/ad1c960f8b16e4920a9f63683e90a9455bc2136a/lisp.js
+
+<!-- commits-index-end -->
