@@ -9,12 +9,25 @@ function evaluateExpression(expression) {
   // evaluate it! First, we need to separate the first item from the rest:
   const [op, ...subExpressions] = expression;
 
-  // recursively evaluate each sub-expression into a value we can use directly:
+  // The first item tells us what to do with the rest of the items. 'if' is
+  // special: only certain sub-expressions get evaluated, so we need to treat
+  // it specially:
+  if (op === 'if') {
+    const [condition, branchIfTrue, branchIfFalse] = subExpressions;
+    if (evaluateExpression(condition)) {
+      return evaluateExpression(branchIfTrue);
+    } else {
+      return evaluateExpression(branchIfFalse);
+    }
+  }
+
+  // Other ops are treated as function - they take a bunch of values and do
+  // something useful with them. Recursively evaluate each sub-expression into
+  // a value we can use directly:
   const args = subExpressions.map((subExpression) => {
     return evaluateExpression(subExpression);
   });
 
-  // The first item tells us what to do with the rest of the items:
   switch (op) {
     case '+':
       return args.reduce((a, b) => a + b);
