@@ -486,6 +486,10 @@ function! `print` should:
 1. call `console.log` with it's arguments
 2. return `undefined` at the end
 
+We're not going to print any strings for now. Strings are treated specially in
+the language we're building - we'll see how (& how to add support for strings)
+later.
+
 Here are the tests:
 
 ```js
@@ -494,9 +498,9 @@ describe('evaluateExpression', () => {
 
   describe('print', () => {
     it('calls console.log', () => {
-      evaluateExpression(['print', 'Hello, world!']);
+      evaluateExpression(['print', 123]);
       expect(console.log).toHaveBeenCalledTimes(1);
-      expect(console.log).toHaveBeenLastCalledWith('Hello, world!');
+      expect(console.log).toHaveBeenLastCalledWith(123);
     });
 
     it('can be called with several arguments', () => {
@@ -506,13 +510,13 @@ describe('evaluateExpression', () => {
     });
 
     it('evaluates nested arguments', () => {
-      evaluateExpression(['print', ['+', 'Hello, ', ['*', 12, 5], '!']]);
+      evaluateExpression(['print', ['+', 5, ['*', 12, 5]]]);
       expect(console.log).toHaveBeenCalledTimes(1);
-      expect(console.log).toHaveBeenLastCalledWith('Hello, 60!');
+      expect(console.log).toHaveBeenLastCalledWith(65);
     });
 
     it('returns undefined', () => {
-      expect(evaluateExpression(['print', 'beeeees'])).toBe(undefined);
+      expect(evaluateExpression(['print', 0])).toBe(undefined);
     });
 
     // add some of your own
@@ -522,3 +526,14 @@ describe('evaluateExpression', () => {
 
 Add the `'print'` function to your `evaluateExpression` function so these tests
 pass.
+
+<details>
+<summary><strong>Hint 1</strong></summary>
+
+> Our print function accepts any number of arguments, and our tests are
+> expecting us to call `console.log` directly with those arguments. If you're
+> not sure how to do that, reading up on
+> [JavaScript's spread syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax)
+> might help here!
+
+</details>
