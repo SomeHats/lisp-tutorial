@@ -48,6 +48,28 @@ function evaluateProgram(program) {
   }
 }
 
+class Context {
+  constructor() {
+    this.scope = new Map();
+  }
+
+  define(name, value) {
+    this.scope.set(name, value);
+  }
+
+  get(name) {
+    if (!this.scope.has(name)) {
+      throw new Error(`${name} is not defined`);
+    }
+
+    return this.scope.get(name);
+  }
+}
+
+function createContext() {
+  return new Context();
+}
+
 // I'm using node's built-in common JS instead of ES modules because i'm too
 // lazy to mess around with babel/typescript/whatever.
-module.exports = { evaluateExpression, evaluateProgram };
+module.exports = { evaluateExpression, evaluateProgram, createContext };
