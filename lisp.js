@@ -9,36 +9,47 @@ function evaluateExpression(expression, context) {
   // evaluate it! First, we need to separate the first item from the rest:
   const [op, ...subExpressions] = expression;
 
-  // The first item tells us what to do with the rest of the items. 'if' is
+  // The first item tells us what to do with the rest of the items. Some are
   // special: only certain sub-expressions get evaluated, so we need to treat
-  // it specially:
-  if (op === 'if') {
-    const [condition, branchIfTrue, branchIfFalse] = subExpressions;
-    if (evaluateExpression(condition, context)) {
-      return evaluateExpression(branchIfTrue, context);
-    } else {
-      return evaluateExpression(branchIfFalse, context);
-    }
-  }
-
-  // Other ops are treated as function - they take a bunch of values and do
-  // something useful with them. Recursively evaluate each sub-expression into
-  // a value we can use directly:
-  const args = subExpressions.map((subExpression) => {
-    return evaluateExpression(subExpression, context);
-  });
-
+  // them specially:
   switch (op) {
-    case '+':
-      return args.reduce((a, b) => a + b);
-    case '-':
-      return args.reduce((a, b) => a - b);
-    case '*':
-      return args.reduce((a, b) => a * b);
-    case '/':
-      return args.reduce((a, b) => a / b);
-    case 'print':
-      return console.log(...args);
+    case 'if': {
+      const [condition, branchIfTrue, branchIfFalse] = subExpressions;
+      if (evaluateExpression(condition, context)) {
+        return evaluateExpression(branchIfTrue, context);
+      } else {
+        return evaluateExpression(branchIfFalse, context);
+      }
+    }
+
+    case 'def': {
+      const [name, valueExpression] = subExpressions;
+      const value = evaluateExpression(valueExpression, context);
+      context.define(name, value);
+      return undefined;
+    }
+
+    default: {
+      // Other ops are treated as function - they take a bunch of values and do
+      // something useful with them. Recursively evaluate each sub-expression into
+      // a value we can use directly:
+      const args = subExpressions.map((subExpression) => {
+        return evaluateExpression(subExpression, context);
+      });
+
+      switch (op) {
+        case '+':
+          return args.reduce((a, b) => a + b);
+        case '-':
+          return args.reduce((a, b) => a - b);
+        case '*':
+          return args.reduce((a, b) => a * b);
+        case '/':
+          return args.reduce((a, b) => a / b);
+        case 'print':
+          return console.log(...args);
+      }
+    }
   }
 }
 
