@@ -1,5 +1,9 @@
 const { expect } = require('@jest/globals');
-const { evaluateExpression, evaluateProgram } = require('./lisp.js');
+const {
+  evaluateExpression,
+  evaluateProgram,
+  createContext,
+} = require('./lisp.js');
 
 beforeEach(() => {
   jest.spyOn(console, 'log');
@@ -124,5 +128,28 @@ describe('evaluateProgram', () => {
       ['print', 123, 456, 789],
     ]);
     expect(console.log.mock.calls).toEqual([[4], [1], [123, 456, 789]]);
+  });
+});
+
+describe('createContext', () => {
+  it('retrieves defined variables', () => {
+    const context = createContext();
+    context.define('x', 13);
+    context.define('myAge', 25);
+    expect(context.get('x')).toBe(13);
+    expect(context.get('myAge')).toBe(25);
+  });
+
+  it('overwrites pre-defined variables', () => {
+    const context = createContext();
+    context.define('x', 13);
+    expect(context.get('x')).toBe(13);
+    context.define('x', 26);
+    expect(context.get('x')).toBe(26);
+  });
+
+  it('throws an error when a variable is not defined', () => {
+    const context = createContext();
+    expect(() => context.get('x')).toThrowError('x is not defined');
   });
 });
