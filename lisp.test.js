@@ -153,6 +153,29 @@ describe('evaluateProgram', () => {
     );
     expect(console.log.mock.calls).toEqual([[4], [1], [123, 456, 789]]);
   });
+
+  describe('def', () => {
+    it('defines variables', () => {
+      const context = createContext();
+      evaluateProgram(
+        [
+          ['def', 'x', 10],
+          ['def', 'y', ['+', 13, 13, 13]],
+          ['def', 'z', ['if', true, ['*', 123, 456, 789], ['print', 0]]],
+        ],
+        context,
+      );
+      expect(context.get('x')).toBe(10);
+      expect(context.get('y')).toBe(39);
+      expect(context.get('z')).toBe(44253432);
+    });
+
+    it('returns undefined', () => {
+      const context = createContext();
+      evaluateProgram([['print', ['def', 'x', 123]]], context);
+      expect(console.log.mock.calls).toEqual([[undefined]]);
+    });
+  });
 });
 
 describe('createContext', () => {
