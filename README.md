@@ -17,6 +17,8 @@
     - [2.0: Printing data](#20-printing-data)
     - [2.1: Conditionals](#21-conditionals)
     - [2.2: Evaluating whole programs](#22-evaluating-whole-programs)
+  - [Step 3: variables & scope](#step-3-variables--scope)
+    - [3.0: Program context](#30-program-context)
 - [Solutions](#solutions)
 
 ## Introduction
@@ -760,6 +762,71 @@ describe('evaluateProgram', () => {
 
 Add `evaluateProgram` to `lisp.js`. Don't forget to export it so we can use it
 in our tests!
+
+### Step 3: variables & scope
+
+Our difficult-to-use calculator from step one can now output data, make
+decisions, and do more than one thing at a time. Progress!!!!! Feel good about
+yourself, if you like. You don't have to though. I won't even know.
+
+This is where things start to get interesting though. So far, we've sort of been
+laying the foundations and getting but basics sorted. Next up though are
+_variables_, and their slightly trickier cousin _scope_. These are really vital
+building blocks towards step 4 - functions.
+
+With functions, our language will be "Turing complete" or "computationally
+universal". That means our language is capable of expressing & computing any
+algorithm, which means (theoretically) it's just as powerful as something like
+JavaScript. That's pretty cool!!! Turing completeness isn't the end goal of
+programming language though - just because something _can_ express any
+algorithm, doesn't mean doing so is
+[easy for the programmer](https://theoutline.com/post/825/brainfuck-coding-languages).
+
+We're getting a little ahead of ourselves though. Let's get started on
+variables.
+
+#### 3.0: Program context
+
+Let's think about this JavaScript program:
+
+```js
+let x = 13;
+console.log(x);
+```
+
+In order to translate this to our lisp, we know we can use `print` for
+`console.log`. For the `let` here, we'll introduce a new construct in our
+language: `def`.
+
+```lisp
+(def x 13)
+(print x)
+```
+
+`def` takes two inputs - the name of a variable to create, and the value to
+store in that variable. If it gets called again, it overwrites that variable -
+this program would print `13` followed by `26`.
+
+```lisp
+(def x 13)
+(print x)
+(def x (+ x x))
+(print x)
+```
+
+Before we get to implementing `def` though, we need somewhere to store all the
+variables that an expression might want to reference. We'll call this an
+"execution context", because it provides the necessary context to execute any
+given section of our program. If I gave you the expression `(+ x 2)` and asked
+you what it evaluates to, you wouldn't be able to give me an answer without the
+additional context that x = 4.
+
+Let's add a new function alongside `evaluateProgram` and `evaluateExpression`
+called `createContext`. `createContext` will return an object with two methods:
+`get` (which retrieves the value in a variable) and `define` which creates &
+sets a variable.
+
+Add these tests:
 
 ## Solutions
 
