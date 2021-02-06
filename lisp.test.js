@@ -1,5 +1,5 @@
 const { expect } = require('@jest/globals');
-const { evaluateExpression } = require('./lisp.js');
+const { evaluateExpression, evaluateProgram } = require('./lisp.js');
 
 beforeEach(() => {
   jest.spyOn(console, 'log');
@@ -113,5 +113,16 @@ describe('evaluateExpression', () => {
     it('returns undefined if condition is not met with no else-branch', () => {
       expect(evaluateExpression(['if', false, 1])).toBe(undefined);
     });
+  });
+});
+
+describe('evaluateProgram', () => {
+  it('evaluates a sequence of expressions', () => {
+    evaluateProgram([
+      ['print', ['+', 2, 2]],
+      ['if', true, ['print', 1], ['print', 2]],
+      ['print', 123, 456, 789],
+    ]);
+    expect(console.log.mock.calls).toEqual([[4], [1], [123, 456, 789]]);
   });
 });
