@@ -947,6 +947,14 @@ mine - if the tests pass, it's working perfectly!
   https://github.com/SomeHats/lisp-tutorial/commit/679da6b9637832644948d7c79aa168907a439cf6
 [file lisp.test.js@2.2-tests]:
   https://github.com/SomeHats/lisp-tutorial/blob/679da6b9637832644948d7c79aa168907a439cf6/lisp.test.js
+[commit 3.0-tests]:
+  https://github.com/SomeHats/lisp-tutorial/commit/1d95363506ac0dbbffcd68c0a5fc6a486c0bb8e0
+[file lisp.test.js@3.0-tests]:
+  https://github.com/SomeHats/lisp-tutorial/blob/1d95363506ac0dbbffcd68c0a5fc6a486c0bb8e0/lisp.test.js
+[commit 3.0-extra]:
+  https://github.com/SomeHats/lisp-tutorial/commit/189c398fde103c93786385dfeaaa8f1287a471a3
+[file lisp.test.js@3.0-extra]:
+  https://github.com/SomeHats/lisp-tutorial/blob/189c398fde103c93786385dfeaaa8f1287a471a3/lisp.test.js
 [commit 1.0-solution]:
   https://github.com/SomeHats/lisp-tutorial/commit/ad1c960f8b16e4920a9f63683e90a9455bc2136a
 [file lisp.js@1.0-solution]:
