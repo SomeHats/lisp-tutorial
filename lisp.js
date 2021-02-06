@@ -1,4 +1,4 @@
-function evaluateExpression(expression) {
+function evaluateExpression(expression, context) {
   // if our expression is not an array, it must be an atom, so we can return it
   // directly without any further processing
   if (!Array.isArray(expression)) {
@@ -14,10 +14,10 @@ function evaluateExpression(expression) {
   // it specially:
   if (op === 'if') {
     const [condition, branchIfTrue, branchIfFalse] = subExpressions;
-    if (evaluateExpression(condition)) {
-      return evaluateExpression(branchIfTrue);
+    if (evaluateExpression(condition, context)) {
+      return evaluateExpression(branchIfTrue, context);
     } else {
-      return evaluateExpression(branchIfFalse);
+      return evaluateExpression(branchIfFalse, context);
     }
   }
 
@@ -25,7 +25,7 @@ function evaluateExpression(expression) {
   // something useful with them. Recursively evaluate each sub-expression into
   // a value we can use directly:
   const args = subExpressions.map((subExpression) => {
-    return evaluateExpression(subExpression);
+    return evaluateExpression(subExpression, context);
   });
 
   switch (op) {
@@ -42,9 +42,9 @@ function evaluateExpression(expression) {
   }
 }
 
-function evaluateProgram(program) {
+function evaluateProgram(program, context) {
   for (const expression of program) {
-    evaluateExpression(expression);
+    evaluateExpression(expression, context);
   }
 }
 
