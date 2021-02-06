@@ -828,6 +828,63 @@ sets a variable.
 
 Add these tests:
 
+```js
+// in lisp.test.js
+
+describe('createContext', () => {
+  it('retrieves defined variables', () => {
+    const context = createContext();
+    context.define('x', 13);
+    context.define('myAge', 25);
+    expect(context.get('x')).toBe(13);
+    expect(context.get('myAge')).toBe(25);
+  });
+
+  it('overwrites pre-defined variables', () => {
+    const context = createContext();
+    context.define('x', 13);
+    expect(context.get('x')).toBe(13);
+    context.define('x', 26);
+    expect(context.get('x')).toBe(26);
+  });
+
+  it('throws an error when a variable is not defined', () => {
+    const context = createContext();
+    expect(() => context.get('x')).toThrowError('x is not defined');
+  });
+
+  // add your own here!
+});
+```
+
+**[See change][commit 3.0-tests] • [Open file][file lisp.test.js@3.0-tests]**
+
+Implement `createContext`. You can implement it however you want internally.
+Don't forget to export it from `lisp.js` and import it in `lisp.test.js`!
+
+Once it's implemented, we'll need to tweak our existing code. The context
+provides the information that makes evaluating expressions and programs
+possible. That means we need to pass it in every time we call
+`evaluateExpression` or `evaluateProgram`.
+
+Update both of these to take `context` as a second argument:
+
+```js
+function evaluateExpression(expression, context) {
+  // ...
+}
+
+function evaluateProgram(program, context) {
+  // ...
+}
+```
+
+Update your tests to pass `createContext()` into each `evaluateExpression` or
+`evaluateProgram`.
+
+**[See change][commit 3.0-extra] • [Open
+lisp.test.js][file lisp.test.js@3.0-extra]**
+
 ## Solutions
 
 My own implementations for each step are listed below for reference. Don't look
