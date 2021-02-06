@@ -42,6 +42,12 @@ function evaluateExpression(expression) {
   }
 }
 
+function evaluateProgram(program) {
+  for (const expression of program) {
+    evaluateExpression(expression);
+  }
+}
+
 // I'm using node's built-in common JS instead of ES modules because i'm too
 // lazy to mess around with babel/typescript/whatever.
-module.exports = { evaluateExpression };
+module.exports = { evaluateExpression, evaluateProgram };
