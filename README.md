@@ -16,6 +16,7 @@
   - [Step 2: side-effects and control flow](#step-2-side-effects-and-control-flow)
     - [2.0: Printing data](#20-printing-data)
     - [2.1: Conditionals](#21-conditionals)
+    - [2.2: Evaluating whole programs](#22-evaluating-whole-programs)
 - [Solutions](#solutions)
 
 ## Introduction
@@ -715,6 +716,51 @@ describe('evaluateExpression', () => {
 
 **[See change][commit 2.1-tests] • [Open file][file lisp.test.js@2.1-tests]**
 
+#### 2.2: Evaluating whole programs
+
+Right now, we've been working on a small but important building block of our
+language: evaluating expressions. Expressions are (sort of) equivalent to a
+single line of code in JS. A programming language where you can only write
+single-line programs probably isn't very useful, so lets fix that. We'll
+introduce a new function alongside `evaluateExpression` called
+`evaluateProgram`. To start off with, `evaluateProgram` will be pretty simple -
+it'll take an array of expressions, and evaluate them in order.
+
+Let's write some tests. `evaluateProgram` won't return anything - it's used
+solely to make our program produce side-effects like logging to the console.
+We'll test it's functionality by checking the `.mock.calls` property that jest
+added to our mock implementation of `console.log`. This property contains an
+array, with an entry for each time `console.log` was called. Each of those
+entries is also an array - containing all the arguments that were passed to a
+particular call.
+
+```js
+// in lisp.test.js:
+
+// remember to update your import at the top of the file!
+const { evaluateExpression, evaluateProgram } = require('./lisp.js');
+
+// at the bottom of the file:
+describe('evaluateProgram', () => {
+  it('evaluates a sequence of expressions', () => {
+    evaluateProgram([
+      ['print', ['+', 2, 2]],
+      ['if', true, ['print', 1], ['print', 2]],
+      ['print', 123, 456, 789],
+    ]);
+    expect(console.log.mock.calls).toEqual([[4], [1], [123, 456, 789]]);
+
+    // add some of your own tests here! use console.log.mockReset() to clear
+    // the mocked console.log calls between tests
+  });
+});
+```
+
+**[See change][commit 2.2-tests] • [Open file][file lisp.test.js@2.2-tests]**
+
+Add `evaluateProgram` to `lisp.js`. Don't forget to export it so we can use it
+in our tests!
+
 ## Solutions
 
 My own implementations for each step are listed below for reference. Don't look
@@ -740,6 +786,8 @@ mine - if the tests pass, it's working perfectly!
     lisp.js][file lisp.js@2.0-solution]
   - **2.1: Conditionals.** [See change][commit 2.1-solution] • [Open
     lisp.js][file lisp.js@2.1-solution]
+  - **2.2: Evaluating whole programs.** [See change][commit 2.2-solution] •
+    [Open lisp.js][file lisp.js@2.2-solution]
 
 <!-- commits-index-start -->
 
@@ -771,6 +819,10 @@ mine - if the tests pass, it's working perfectly!
   https://github.com/SomeHats/lisp-tutorial/commit/2fa9247b1c66ce38283bf760da4d9797f8b1a2ec
 [file lisp.test.js@2.1-tests]:
   https://github.com/SomeHats/lisp-tutorial/blob/2fa9247b1c66ce38283bf760da4d9797f8b1a2ec/lisp.test.js
+[commit 2.2-tests]:
+  https://github.com/SomeHats/lisp-tutorial/commit/679da6b9637832644948d7c79aa168907a439cf6
+[file lisp.test.js@2.2-tests]:
+  https://github.com/SomeHats/lisp-tutorial/blob/679da6b9637832644948d7c79aa168907a439cf6/lisp.test.js
 [commit 1.0-solution]:
   https://github.com/SomeHats/lisp-tutorial/commit/ad1c960f8b16e4920a9f63683e90a9455bc2136a
 [file lisp.js@1.0-solution]:
@@ -803,5 +855,9 @@ mine - if the tests pass, it's working perfectly!
   https://github.com/SomeHats/lisp-tutorial/commit/0a56f56140537303a759bed1d00763ac04601181
 [file lisp.js@2.1-solution]:
   https://github.com/SomeHats/lisp-tutorial/blob/0a56f56140537303a759bed1d00763ac04601181/lisp.js
+[commit 2.2-solution]:
+  https://github.com/SomeHats/lisp-tutorial/commit/909b649063f76de3ab65f707e4d60ee9a26a7fa9
+[file lisp.js@2.2-solution]:
+  https://github.com/SomeHats/lisp-tutorial/blob/909b649063f76de3ab65f707e4d60ee9a26a7fa9/lisp.js
 
 <!-- commits-index-end -->
